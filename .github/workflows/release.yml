@@ -1,0 +1,83 @@
+name: Release VPM Package
+
+on:
+  push:
+    tags:
+      - 'v*'   # trigger on tags like v1.2.0, v1.3.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Build package zip
+        run: |
+          ZIP=com.vrcanalytics.beacon-${{ steps.version.outputs.VERSION }}.zip
+          # Zip the package contents only, excluding repo metadata.
+          zip -r $ZIP Runtime Editor package.json
+          echo "ZIP=$ZIP" >> $GITHUB_ENV
+          echo "SHA256=$(sha256sum $ZIP | awk '{print $1}')" >> $GITHUB_ENV
+
+      - name: Create GitHub Release and upload zip
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ZIP }}
+          tag_name: ${{ github.ref_name }}
+          name: "Beacon v${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## VRCAnalytics Beacon v${{ steps.version.outputs.VERSION }}
+
+            ### Install via VCC (one-click)
+
+            [Add to VCC](vcc://vpm/addRepo?url=https://vrcanalytics.com/vpm/index.json)
+
+            ### Install via VCC (manual)
+
+            1. Open VRChat Creator Companion
+            2. **Settings → Packages → Add Repository**
+            3. Paste: `https://vrcanalytics.com/vpm/index.json`
+            4. Find **VRCAnalytics Beacon** in your project's package list → Add
+
+            ### Manual install
+            Download `com.vrcanalytics.beacon-${{ steps.version.outputs.VERSION }}.zip` below
+            and drag it into Unity's Package Manager.
+
+      - name: Update index.json with new version + SHA256
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+          SHA256: ${{ env.SHA256 }}
+          ZIP_URL: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/com.vrcanalytics.beacon-${{ steps.version.outputs.VERSION }}.zip
+        run: |
+          node -e "
+            const fs = require('fs');
+            const idx = JSON.parse(fs.readFileSync('index.json'));
+            const pkg = idx.packages['com.vrcanalytics.beacon'];
+            pkg.versions[process.env.VERSION] = {
+              name: 'com.vrcanalytics.beacon',
+              displayName: 'VRCAnalytics Beacon',
+              version: process.env.VERSION,
+              unity: '2019.4',
+              description: 'Drop-in visitor analytics for VRChat worlds. Tracks joins, leaves, and session duration.',
+              author: { name: 'VRCAnalytics', url: 'https://vrcanalytics.com' },
+              dependencies: { 'com.vrchat.udonsharp': '1.1.x' },
+              url: process.env.ZIP_URL,
+              zipSHA256: process.env.SHA256
+            };
+            fs.writeFileSync('index.json', JSON.stringify(idx, null, 2));
+          "
+
+      - name: Commit updated VPM index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git commit -m "vpm: add v${{ steps.version.outputs.VERSION }}"
+          git push origin HEAD:main

@@ -1,0 +1,17 @@
+{
+  "name": "com.vrcanalytics.beacon",
+  "displayName": "VRCAnalytics Beacon",
+  "version": "1.2.0",
+  "unity": "2019.4",
+  "description": "Drop-in visitor analytics for VRChat worlds. Tracks joins, leaves, and session duration — no setup beyond pasting your world key.",
+  "author": {
+    "name": "VRCAnalytics",
+    "url": "https://vrcanalytics.com"
+  },
+  "dependencies": {},
+  "keywords": ["vrchat", "analytics", "udon", "udonsharp"],
+  "license": "MIT",
+  "homepage": "https://vrcanalytics.com",
+  "changelogUrl": "https://github.com/vrcanalytics/beacon/blob/main/CHANGELOG.md",
+  "documentationUrl": "https://vrcanalytics.com/docs"
+}

@@ -1,0 +1,17 @@
+# Unity-specific cruft (the package source itself doesn't need these, but if anyone
+# clones into a Unity project, this prevents accidental noise).
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+
+# OS / IDE noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build artifacts produced by the release workflow (the workflow handles the zip).
+*.zip
