@@ -67,7 +67,7 @@ jobs:
               unity: '2019.4',
               description: 'Drop-in visitor analytics for VRChat worlds. Tracks joins, leaves, and session duration.',
               author: { name: 'VRCAnalytics', url: 'https://vrcanalytics.com' },
-              dependencies: { 'com.vrchat.udonsharp': '1.1.x' },
+              vpmDependencies: { 'com.vrchat.udonsharp': '1.1.x' },
               url: process.env.ZIP_URL,
               zipSHA256: process.env.SHA256
             };

@@ -19,7 +19,7 @@
             "name": "VRCAnalytics",
             "url": "https://vrcanalytics.com"
           },
-          "dependencies": {
+          "vpmDependencies": {
             "com.vrchat.udonsharp": "1.1.x"
           },
           "url": "https://github.com/Nyamere/vrcanalytics-beacon/releases/download/v1.2.0/com.vrcanalytics.beacon-1.2.0.zip",
