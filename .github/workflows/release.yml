@@ -67,7 +67,7 @@ jobs:
               unity: '2022.3',
               description: 'Drop-in visitor analytics for VRChat worlds. Tracks joins, leaves, and session duration.',
               author: { name: 'VRCAnalytics', url: 'https://vrcanalytics.com' },
-              vpmDependencies: { 'com.vrchat.worlds': '3.5.x' },
+              vpmDependencies: { 'com.vrchat.worlds': '>=3.5.0' },
               url: process.env.ZIP_URL,
               zipSHA256: process.env.SHA256
             };
