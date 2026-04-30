@@ -2,10 +2,7 @@
   "name": "VRCAnalytics",
   "id": "com.vrcanalytics",
   "url": "https://vrcanalytics.com/vpm/index.json",
-  "author": {
-    "name": "VRCAnalytics",
-    "url": "https://vrcanalytics.com"
-  },
+  "author": "VRCAnalytics",
   "packages": {
     "com.vrcanalytics.beacon": {
       "versions": {
@@ -13,14 +10,14 @@
           "name": "com.vrcanalytics.beacon",
           "displayName": "VRCAnalytics Beacon",
           "version": "1.2.0",
-          "unity": "2019.4",
+          "unity": "2022.3",
           "description": "Drop-in visitor analytics for VRChat worlds. Tracks joins, leaves, and session duration.",
           "author": {
             "name": "VRCAnalytics",
             "url": "https://vrcanalytics.com"
           },
           "vpmDependencies": {
-            "com.vrchat.udonsharp": "1.1.x"
+            "com.vrchat.worlds": "3.5.x"
           },
           "url": "https://github.com/Nyamere/vrcanalytics-beacon/releases/download/v1.2.0/com.vrcanalytics.beacon-1.2.0.zip",
           "zipSHA256": "84c49cff914f99b7be76c419edb4d1b3f90b14731388483633f35cee77232dae"
